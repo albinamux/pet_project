@@ -1,0 +1,17 @@
+version: '3.7'
+
+services:
+  postgres:
+    image: postgres:latest
+    container_name: my_shop_db
+    environment:
+      - "POSTGRES_USER=postgres"
+      - "POSTGRES_PASSWORD=postgres"
+      - "POSTGRES_DB=postgres"
+    ports:
+      - "${POSTGRES_POST:-5432}:5432"
+    restart: unless-stopped
+
+
+volumes:
+  db-data:
