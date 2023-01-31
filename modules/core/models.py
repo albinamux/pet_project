@@ -35,12 +35,20 @@ class Author(models.Model):
     def __str__(self):
         return f"{self.surname} {self.name} {self.patronymic} "
 
+    @classmethod
+    def get_genders(cls):
+        genders = tuple()
+        for gender in cls.CHOICES_gander:
+            genders += gender
+        return genders
+
 
 class Country(models.Model):
     name = models.CharField("Страна", max_length=100, null=False, blank=False)
 
     def __str__(self):
         return f"{self.name}"
+
 
 
 class Clothes(models.Model):
@@ -55,6 +63,13 @@ class Clothes(models.Model):
 
     def __str__(self):
         return f"{self.type.name} | {self.color} | {self.get_season_display()}"
+
+    @classmethod
+    def get_season(cls):
+        season = tuple()
+        for seasons in cls.CHOICES_season:
+            season += seasons
+        return season
 
 
 class Type(models.Model):

@@ -5,13 +5,13 @@ from rest_framework.serializers import ModelSerializer
 class BookSerializer(ModelSerializer):
     class Meta:
         model = Book
-        fields = ['title', 'numer_of_pages', 'author']
+        fields = ['id', 'title', 'numer_of_pages', 'author']
 
 
 class AuthorSerializer(ModelSerializer):
     class Meta:
         model = Author
-        fields = ['surname', 'name', 'patronymic']
+        fields = ['surname', 'name', 'patronymic', 'year_of_birth', 'country', 'gander']
 
 
 class CountrySerializer(ModelSerializer):
