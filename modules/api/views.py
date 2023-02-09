@@ -161,22 +161,25 @@ class CountryViewSet(viewsets.ViewSet):
         return Response(f"Successfully deleted country with id={pk}")
 
     def create(self, request, *args, **kwargs):
-
+        logger.debug("Trying create country")
         request_data = request.data
         country=Country(
             name=request_data.get("name")
         )
         country.save()
         serializer = CountrySerializer(country)
+        logger.debug(f"Successfully created country with {country.name=}")
         return Response(serializer.data)
 
     def partial_update(self, request, pk=None):
+        logger.debug(f"Trying partial update country with id={pk}")
         country_to_update = Country.objects.filter(id=pk).first()
         if country_to_update is None:
             return Response(f"Country with id={pk} doesn't exists")
         serializer = CountrySerializer(country_to_update, data=request.data, partial=True)
         serializer.is_valid(raise_exception=True)
         serializer.save()
+        logger.debug(f"Successfully partial updated country with id={pk}")
         return Response(serializer.data)
 class ClothesViewSet(viewsets.ViewSet):
     queryset = Clothes.objects.all()
@@ -189,29 +192,36 @@ class ClothesViewSet(viewsets.ViewSet):
         return Response(serializer.data)
 
     def retrieve(self, request, pk=None):
+        logger.debug(f"Trying to retrieve clothe with id={pk}")
         clothes = Clothes.objects.filter(id=pk).first()
         if clothes is None:
             return Response(f"Clothes with id={pk} doesn't exists")
         serializer = CountrySerializer(clothes)
+        logger.debug(f"Successfully retrieve clothe with id={pk}")
         return Response(serializer.data)
 
     def destroy(self, request, pk=None):
+        logger.debug(f"Trying deleted clothes with id={pk}")
         clothes_to_delete = Clothes.objects.filter(id=pk).firs()
         if clothes_to_delete is None:
             return Response(f"Clothes with id={pk} doesn't exists")
         clothes_to_delete.delete()
+        logger.debug(f"Successfully deleted clothes with id={pk}")
         return Response(f"Successfully deleted clothes with id={pk}")
 
     def partial_update(self, request, pk=None):
+        logger.debug(f"Trying update clothes with id={pk}")
         clothes_to_update = Clothes.objects.filter(id=pk).first()
         if clothes_to_update is None:
             return Response(f"Clothes with id={pk} doesn't exists")
         serializer = CountrySerializer(clothes_to_update, data=request.data, partial=True)
         serializer.is_valid(raise_exception=True)
         serializer.save()
+        logger.debug(f"Successfully update clothes with id={pk}")
         return Response(serializer.data)
 
     def create(self, request, *args, **kwargs):
+        logger.debug("Trying create clothes")
         request_data = request.data
         season = request_data.get("season")
         if season not in Clothes.get_season():
@@ -223,6 +233,7 @@ class ClothesViewSet(viewsets.ViewSet):
         )
         serializer = ClothesSerializer(clothes)
         serializer.save()
+        logger.debug(f"Successfully created clothes with {clothes.type=}")
         return Response(serializer.data)
 
 

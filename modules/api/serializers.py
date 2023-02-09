@@ -1,8 +1,10 @@
 from modules.core.models import Book, Author, Country, Clothes
-from rest_framework.serializers import ModelSerializer
+from rest_framework.serializers import ModelSerializer, StringRelatedField
 
 
 class BookSerializer(ModelSerializer):
+    author = StringRelatedField()
+
     class Meta:
         model = Book
         fields = ['id', 'title', 'numer_of_pages', 'author']

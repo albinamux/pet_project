@@ -17,7 +17,7 @@ class Book(models.Model):
     author = models.ForeignKey("Author", on_delete=models.CASCADE)
 
     def __str__(self):
-        return f"{self.title} | {self.author}"
+        return f"{self.title} | {self.numer_of_pages} | {self.author}"
 
 
 class Author(models.Model):
@@ -25,15 +25,15 @@ class Author(models.Model):
         ('w', 'woman'),
         ('m', 'man'),
     )
-    name = models.CharField("Имя", max_length=255, null=False, blank=False)
     surname = models.CharField("Фамилия", max_length=255, null=False, blank=False)
+    name = models.CharField("Имя", max_length=255, null=False, blank=False)
     patronymic = models.CharField("Отчество", max_length=255, null=False, blank=False)
     year_of_birth = models.DateField("Год рождения", auto_now=False, auto_now_add=False, null=False, blank=False)
     country = models.ForeignKey("Country", on_delete=models.CASCADE)
     gander = models.CharField("Пол", max_length=255, null=False, blank=False, choices=CHOICES_gander)
 
     def __str__(self):
-        return f"{self.surname} {self.name} {self.patronymic} "
+        return f"{self.surname} {self.name} {self.patronymic} | {self.year_of_birth} | {self.country} | {self.gander}"
 
     @classmethod
     def get_genders(cls):
@@ -50,7 +50,6 @@ class Country(models.Model):
         return f"{self.name}"
 
 
-
 class Clothes(models.Model):
     CHOICES_season = (
         ('z','Зима'),
@@ -62,7 +61,7 @@ class Clothes(models.Model):
     season = models.CharField("Сезон", max_length=100, null=False, blank=False, choices=CHOICES_season)
 
     def __str__(self):
-        return f"{self.type.name} | {self.color} | {self.get_season_display()}"
+        return f"{self.type.name} | {self.color} | {self.season}"
 
     @classmethod
     def get_season(cls):
